@@ -8,7 +8,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -17,7 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 @Entity
-@Table (name ="ListaPelicua")
+@Table (name ="pelicula")
 @Component
 public class Pelicula {
 	@Id 
@@ -155,4 +158,27 @@ public class Pelicula {
 		Estado = estado;
 	}
 	
+	//portada
+	@Lob
+	private String imagen;
+	
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+	
+	@Min(value=0,message="El duracion en horas debe ser mayor que 0")
+	@Max(value=857,message="El duracion en horas debe ser menor que 857")
+	private Integer duracionPelicula;
+	public Integer getDuracionPelicula() {
+		return duracionPelicula;
+	}
+
+	public void setDuracionPelicula(Integer duracionPelicula) {
+		this.duracionPelicula = duracionPelicula;
+	}
+
 }
