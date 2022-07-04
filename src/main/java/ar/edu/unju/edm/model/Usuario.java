@@ -25,7 +25,7 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column (name= "ID", nullable = true)
-	private int Id;
+	private Long Id;
 
 	@NotEmpty //@Email
 	private String email;
@@ -48,7 +48,7 @@ public class Usuario {
 	
 	@Min(value=1000000, message="El dni debe ser mayor a 1.000.000")
 	@Max(value=99999999, message="El dni debe ser menor a 99.999.999")
-	private int dni;
+	private Long dni;
 	
 	@Past(message="La fecha de nacimiento debe ser del pasado")
 	@DateTimeFormat(pattern="yyyy-MM-dd")
@@ -74,11 +74,11 @@ public class Usuario {
 		return false;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return Id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		Id = id;
 	}
 
@@ -114,11 +114,11 @@ public class Usuario {
 		this.nombre = nombre;
 	}
 
-	public int getDni() {
+	public Long getDni() {
 		return dni;
 	}
 
-	public void setDni(int dni) {
+	public void setDni(Long dni) {
 		this.dni = dni;
 	}
 
