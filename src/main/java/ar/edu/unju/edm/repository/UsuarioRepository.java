@@ -5,7 +5,9 @@ import java.util.Optional;
 
 import ar.edu.unju.edm.model.Usuario;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UsuarioRepository extends CrudRepository<Usuario,Long> {
 	public List<Usuario> findByEstado(boolean Estado);
 	public Optional<Usuario> findByDni(int dni);
