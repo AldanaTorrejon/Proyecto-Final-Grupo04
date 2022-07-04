@@ -33,10 +33,10 @@ public class Autentication implements AuthenticationSuccessHandler{
 				}
 			}
 		}if(cliente) {
-			redirectStrategy.sendRedirect(request, response, "/listaPeliculas");
+			redirectStrategy.sendRedirect(request, response, "/ListadoPelicula");
 		}else {
 			if(administrador) {
-				redirectStrategy.sendRedirect(request, response, "/cargarPeliculas");
+				redirectStrategy.sendRedirect(request, response, "/CargaPeliculas");
 			}
 		}
 	}	
