@@ -102,4 +102,40 @@ public class UsuarioPeliculaController {
 		vistaa.setViewName("cargaComentario");
 		return vistaa;
 	}
+	@GetMapping({"/valoracion"})
+	public ModelAndView addValoracion () {
+		GRUPO04.info("Ingrese al metodo: Nueva Valoración");
+		ModelAndView vistaa = new ModelAndView ("cargaValoracion");
+		vistaa.addObject("usuariopelicula", UserPeliculaService.newUserFilm());
+		vistaa.addObject("usuario", ServiceUsuario.mostrarUsuarios());
+		vistaa.addObject("pelicula",ServicePelicula.listarPeliculas());
+		vistaa.addObject("editMode", false);
+		return vistaa;
+	}
+	@PostMapping ("/guardarValoracion")
+	public ModelAndView saveValoracion (@Valid @ModelAttribute ("usuariopelicula") UsuarioPelicula compraparaguardar, BindingResult result) {
+		ModelAndView vistaa=new ModelAndView();
+		if (result.hasErrors ()) {
+			GRUPO04.fatal("Error de validacion");
+			vistaa.addObject("usuariopelicula", compraparaguardar);
+			vistaa.addObject("editMode", false);
+		    vistaa.setViewName("CargaValoracion");
+		    return vistaa;
+		}
+		try {
+			UserPeliculaService.saveUserFilm(compraparaguardar);
+		}catch (Exception e) {
+			vistaa.addObject("formUsuarioErrorMesssage", e.getMessage());
+			vistaa.addObject("usuariopelicula", compraparaguardar);
+			GRUPO04.error("Saliendo del metodo:");
+			vistaa.addObject("aditMode", false);
+			vistaa.setViewName("CargaValoracion");
+			return vistaa;
+		}
+		vistaa.addObject("formUsuarioErrorMessage", "Usuario guardado correctamente");
+		vistaa.addObject("unUsuario", UserPeliculaService.newUserFilm());
+		vistaa.addObject("editMode", false);
+		vistaa.setViewName("CargaValoracion");
+		return vistaa;
+	}
 }
