@@ -46,9 +46,10 @@ public class PeliculaController {
 		GRUPO04.info("Ingresando a GUARDAR PELICULA");
 		if(resultado.hasErrors()) {
 			GRUPO04.fatal("Error en GUARDAR PELICULA");
-		}
+			model.addAttribute("editMode", false);
 			model.addAttribute("pelicula", peliculaparaguardar);
- 
+            return "CargaPelicula";
+		} 
 		try {
 			
 			byte[] content = file.getBytes();
@@ -124,6 +125,7 @@ public class PeliculaController {
 			@RequestMapping("/deleteMovie/{idPelicula}")
 			public String deleteMovie(@PathVariable(name="idPelicula") Long idPelicula, Model model) {
 				try {
+					GRUPO04.info("ingresando al metodo eliminar");
 					peliculaService.eliminarPelicula(idPelicula);
 				}catch(Exception error){
 					GRUPO04.error("encontrando: eliminarpelicula");
