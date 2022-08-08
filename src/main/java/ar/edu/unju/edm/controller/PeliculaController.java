@@ -24,11 +24,10 @@ import org.springframework.web.servlet.ModelAndView;
 import ar.edu.unju.edm.model.Pelicula;
 import ar.edu.unju.edm.model.Usuario;
 import ar.edu.unju.edm.model.UsuarioPeliculas;
-import ar.edu.unju.edm.model.ValoracionUsuarioPeliculas;
 import ar.edu.unju.edm.service.IPeliculaService;
 import ar.edu.unju.edm.service.IUsuarioPeliculaService;
 import ar.edu.unju.edm.service.IUsuarioService;
-import ar.edu.unju.edm.service.ValoracionUsuarioPeliculasService;
+
 
 @Controller
 public class PeliculaController {
@@ -38,8 +37,6 @@ public class PeliculaController {
 	IPeliculaService peliculaService;
 	@Autowired
 	IUsuarioService usuarioService;
-	@Autowired
-	ValoracionUsuarioPeliculasService valoracionUsuarioPeliculasService;
 	@Autowired
 	IUsuarioPeliculaService usuarioPeliculaService;
 
@@ -159,35 +156,13 @@ public class PeliculaController {
 		peliculaencontrada = peliculaService.buscarPelicula(idPelicula);
 		GRUPO04.info("pelicula:" + peliculaencontrada.getNombrePelicula());
 		encontrado.addObject("peli", peliculaencontrada);
-		encontrado.addObject("listacomentarios", valoracionUsuarioPeliculasService.ListarValoracion(peliculaencontrada));
+        ////
 		GRUPO04.info(peliculaencontrada.getDescripcion());
 		GRUPO04.fatal("Saliendo del metodo encontrado pelis ");
 		return encontrado;
 	}
 
-	@GetMapping("/valoracion/{id}")
-	public ModelAndView valorar(@PathVariable(name = "id") Long id) throws Exception {
-		Pelicula peliculaencontrada = new Pelicula();
-		ValoracionUsuarioPeliculas valoracionUsuarioPeliculas = new ValoracionUsuarioPeliculas();
-		ModelAndView encontrado = new ModelAndView("CargaValoracion");
-		peliculaencontrada = peliculaService.buscarPelicula(id);
-		Authentication auth = SecurityContextHolder
-				.getContext()
-				.getAuthentication();
-		UserDetails userDetail = (UserDetails) auth.getPrincipal();
-		Usuario userEnSesion = usuarioService.buscarUsuario(Long.parseLong(userDetail.getUsername()));
-		GRUPO04.info(userEnSesion.getId());
-		valoracionUsuarioPeliculas.setUsuario(userEnSesion);
-		valoracionUsuarioPeliculas.setPelis(peliculaencontrada);
-		encontrado.addObject("valoracion", valoracionUsuarioPeliculas);
-		return encontrado;
-	}
-
-	@PostMapping("/valorar")
-	public String valorar(@ModelAttribute("valoracion") ValoracionUsuarioPeliculas unaValoracion) throws Exception {
-		valoracionUsuarioPeliculasService.guardarValoracion(unaValoracion);
-		return "redirect:/ListadoPelicula";
-	}
+	////
 
 	@GetMapping("/entrada")
 	public ModelAndView Entradas() throws Exception {
