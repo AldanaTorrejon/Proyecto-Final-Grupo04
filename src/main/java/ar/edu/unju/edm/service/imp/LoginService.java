@@ -1,9 +1,8 @@
-                                                package ar.edu.unju.edm.service.imp;
+package ar.edu.unju.edm.service.imp;
 
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,10 +21,9 @@ public class LoginService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String dni) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
 		
 //		// buscar usuario
-		Usuario usuarioEncontrado = usuarioRepository.findByDni(Integer.parseInt(dni)).orElseThrow(()->new UsernameNotFoundException("Usuario Invalido"));
+		Usuario usuarioEncontrado = usuarioRepository.findById(Long.parseLong(dni)).orElseThrow(()->new UsernameNotFoundException("Usuario Invalido"));
 //		
 //		//difinir autorizacion 
 		List <GrantedAuthority> tipos = new ArrayList<> ();
@@ -38,7 +36,7 @@ public class LoginService implements UserDetailsService{
 		return usuarioSesion;
 	}
 }
-	
+
 
 ////TODO Auto-generated method stub
 //

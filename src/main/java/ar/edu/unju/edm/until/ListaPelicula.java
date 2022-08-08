@@ -13,7 +13,6 @@ public class ListaPelicula {
 	
 	//Constructor por defecto
 	public ListaPelicula() {
-		// TODO Auto-generated constructor stub
 	}
 
 	//Getter and Setters
@@ -25,3 +24,4 @@ public class ListaPelicula {
 		this.listado = listado;
 	}
 }
+

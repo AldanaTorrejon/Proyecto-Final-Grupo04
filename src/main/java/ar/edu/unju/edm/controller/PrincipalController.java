@@ -8,14 +8,12 @@ public class PrincipalController {
 	@GetMapping({"/","/index","/home"})
 	public String getIndex(){
 		
-		return "index";
+		return "IngresodeIUsuario";
 	}	
 	
 	@GetMapping({"/login","/ingreso"})
 	public String getLogin(){
 		
-		return "login";
-	}	
-	
-	
+		return "IngresodeIUsuario";
+	}
 }

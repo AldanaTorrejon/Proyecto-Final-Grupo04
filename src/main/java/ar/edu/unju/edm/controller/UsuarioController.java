@@ -23,60 +23,51 @@ public class UsuarioController {
 	private static final Log GRUPO04=LogFactory.getLog(UsuarioController.class);//constante con mayuscula
 
 	@Autowired
-	Usuario newUsuario;
-	@Autowired
 	IUsuarioService serviceUsuario;
 	
 	//entra
 	@GetMapping("/otroUsuario")
 	public ModelAndView addUser() {
 		GRUPO04.info("ingresando a NUEVO USUARIO");
-		ModelAndView vista = new ModelAndView("CargaUsuario");//pasa nombre de la lista a pasar
+		ModelAndView vista = new ModelAndView("LoginService");//pasa nombre de la lista a pasar
+		Usuario newUsuario=new Usuario();
 		//vista.addObject("nuevoUsuario");
 		vista.addObject("usuario", newUsuario);
 		vista.addObject("editMode", false);
 		return vista;
 	}
-	
 	//guardar usuarios
 	@PostMapping("/guardarUsuario")
-	public String saveUser(@Valid @ModelAttribute("usuario") Usuario usuarioparaguardar, BindingResult resultado, Model model) { //del modelo viene 1 atributo llamado usuario y lo agarra le indica el tipo y un nombre 
-		System.out.println(resultado.getAllErrors());
-		if(resultado.hasErrors()) {
-			GRUPO04.fatal("Error de Validacion");
-			model.addAttribute("usuario",usuarioparaguardar);
-			model.addAttribute("editMode", false);
-			return "CargaUsuario";
-		}
-		try { //controla si algo se ejecuta bien
-			serviceUsuario.guardarUsuario(usuarioparaguardar);
-		}catch(Exception error){ //sale por aqui
-			model.addAttribute("formUsuarioErrorMessage", error.getMessage());
-			model.addAttribute("usuario",usuarioparaguardar);
-			model.addAttribute("editMode", false);
-			GRUPO04.error("saliendo del metodo: saveUser");
-			return "CargaUsuario";
-		}
-		model.addAttribute("formUsuarioErrorMessage", "Usuario Guardado Correctamente");
-		model.addAttribute("usuario", newUsuario);
-		model.addAttribute("editMode", false);
-		return "CargaUsuario";
+	public String saveUser(@Valid @ModelAttribute("usuario") Usuario user, BindingResult resultado, Model model) { //del modelo viene 1 atributo llamado usuario y lo agarra le indica el tipo y un nombre 
+		GRUPO04.fatal("entro");
+		if (resultado.hasErrors()) {
+      GRUPO04.fatal("Error de validación");
+      model.addAttribute("usuario", user);
+      return "LoginService";
+    }
+    try {
+      serviceUsuario.guardarUsuario(user);
+      GRUPO04.info("guardado correctamente");
+    } catch (Exception e) {
+			model.addAttribute("unUsuario", user);
+			GRUPO04.error("saliendo del metodo");
+			return "LoginService";	
+    }
+		model.addAttribute("unUsuario", user);			
+		return "IngresodeIUsuario";
 	}
-	
-	
-	//listar usuarios
-	@GetMapping("/listadoUsuario")
+	@GetMapping("/ListadoUsuario")
 	public ModelAndView listUser() {
 		ModelAndView vistaa = new ModelAndView("ListadoUsuario");
-		if(serviceUsuario.mostrarUsuarios().size()!=0) {
-		vistaa.addObject("listaUsuario", serviceUsuario.mostrarUsuarios());
-		GRUPO04.info("ingresando al metodo: listUsers "+serviceUsuario.mostrarUsuarios().get(0).getApellido());
+		if(serviceUsuario.listarUsuarios().size()!=0) {
+		vistaa.addObject("listaUsuario", serviceUsuario.listarUsuarios());
+		GRUPO04.info("ingresando al metodo: listUsers "+serviceUsuario.listarUsuarios().get(0).getNombre());
 		}
 		return vistaa;
 	}
 	
 	//eliminar usuario
-	@RequestMapping("/eliminarUsuario/{dni}")
+	@GetMapping("/eliminarUsuario/{dni}")
 	public String deleteUser(@PathVariable(name="dni")Long dni, Model model) {
 		try {
 			serviceUsuario.eliminarUsuario(dni);
@@ -93,9 +84,9 @@ public class UsuarioController {
 	public ModelAndView edituser(Model model,@PathVariable (name="dni") Long dni)throws Exception {	
 	Usuario usuarioEncontrado = new Usuario();
 		usuarioEncontrado = serviceUsuario.buscarUsuario(dni);
-		ModelAndView modelView = new ModelAndView("cargarUsuario");
+		ModelAndView modelView = new ModelAndView("LoginService");
 		modelView.addObject("usuario", usuarioEncontrado);
-		GRUPO04.error("saliendo de ELIMINAR USUARIO"+ usuarioEncontrado.getDni());
+		GRUPO04.error("saliendo de ELIMINAR USUARIO"+ usuarioEncontrado.getId());
 		modelView.addObject("editMode", true);
 		return modelView;
 	}
@@ -103,10 +94,10 @@ public class UsuarioController {
 	@PostMapping("/editarUsuario")
 	public ModelAndView postEditarUsuario(@ModelAttribute ("usuario") Usuario usuarioparamodificar, BindingResult result) {  
 		GRUPO04.fatal("Error de validacion"+usuarioparamodificar.getContraseña());
-		GRUPO04.fatal("Error de validacion"+usuarioparamodificar.getDni());
+		GRUPO04.fatal("Error de validacion"+usuarioparamodificar.getId());
 			if(result.hasErrors()){
 			GRUPO04.fatal("Error de validacion");
-			ModelAndView vista = new ModelAndView("CargaUsuario");
+			ModelAndView vista = new ModelAndView("LoginService");
 			vista.addObject("usuario", usuarioparamodificar);
 			vista.addObject("editMode",true);
 			return vista;
@@ -114,17 +105,17 @@ public class UsuarioController {
 		try{
 			serviceUsuario.modificarUsuario(usuarioparamodificar);
 		}catch(Exception error){
-			ModelAndView vista = new ModelAndView("cargarUsuario");
+			ModelAndView vista = new ModelAndView("LoginService");
 			vista.addObject("formUsuarioErrorMessage", error.getMessage());
 			vista.addObject("usuario", usuarioparamodificar);
 			vista.addObject("editMode",true);
 			GRUPO04.error("saliendo del metodo: editarusuario");
 			return vista;
 		}
-		 GRUPO04.error("DNI de usuarioparamod "+ usuarioparamodificar.getDni());
+		 GRUPO04.error("DNI de usuarioparamod "+ usuarioparamodificar.getId());
 		 GRUPO04.error("Nombre de usuarioparamod "+ usuarioparamodificar.getNombre());
 		ModelAndView vista1 = new ModelAndView("ListadoUsuario");		
-		vista1.addObject("listaUsuarios", serviceUsuario.mostrarUsuarios());	
+		vista1.addObject("listaUsuarios", serviceUsuario.listarUsuarios());	
 		vista1.addObject("formUsuarioErrorMessage","Usuario modificado Correctamente");
 		
 		return vista1;
