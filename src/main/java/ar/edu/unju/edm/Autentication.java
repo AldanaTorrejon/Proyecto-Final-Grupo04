@@ -36,7 +36,7 @@ public class Autentication implements AuthenticationSuccessHandler{
 			redirectStrategy.sendRedirect(request, response, "/ListadoPelicula");
 		}else {
 			if(administrador) {
-				redirectStrategy.sendRedirect(request, response, "/otraPelicula");
+				redirectStrategy.sendRedirect(request, response, "/ListadoPelicula-admin");
 			}
 		}
 	}	
