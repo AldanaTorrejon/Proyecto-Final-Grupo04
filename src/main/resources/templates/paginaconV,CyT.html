@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+ <meta charset="UTF-8">
+    <title>Garra-G4</title>
+	<link rel="stylesheet" th:href="@{/css/estilo.css}">
+    <link th:href="@{/webjars/bootstrap/5.0.0/css/bootstrap.min.css}"rel="stylesheet" type="text/css">
+	<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+	<title>Eunoia</title>
+	<link rel="shortcut icon" href="img/ICONO.png" type="image/ico" /> 
+	<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body class="descrip">
+	<!---header--->
+	<header>
+		<!--nav-->
+		<div th:insert="/layouts/nav :: nav"></div>
+	</header>
+	<!--Principal Mirar Pelicula/Trailer-->
+    <div class="mirar-container container" th:object="${peli}">
+        <img th:src="${'data:image/jpg;base64,'+ peli.imagen}" class="mirar-img">
+        <div class="mirar-texto">
+            <h2 th:text="${peli.NombrePelicula}"></h2>
+            <!--Valoracion-->
+            <div class="valoracion">
+                <a th:href="@{'/valoracion/'+ ${peli.Idp}}"><i class='bx bx-star' ></i></a>
+            </div>
+            <!--Info-->
+            <div class="tags">
+                <span th:text="${peli.generoPelicula}"></span>
+            </div>
+        </div>
+    </div>
+    <div class="info-container">
+        <h2 th:text="${peli.NombrePelicula}"></h2>
+        <p th:text="${peli.Descripcion}"></p>
+    </div>
+    <section class="testimonios">
+        <div class="testimonios_header">
+          <span>Comentarios</span>
+          <h1>Clientes dicen</h1>
+        </div>
+        <div th:if="${listacomentarios.empty}">
+          <h1>No hay comentarios</h1>
+        </div>
+        <div class="testimonios_caja" th:each="c : ${listacomentarios}">
+          <div class="caja-top">
+            <div class="perfil">
+              <div class="name-user">
+                <strong th:text="${c.usuario.nombre}"></strong>
+                <span th:text="${c.usuario.email}"></span>
+              </div>
+            </div>
+          </div>
+          <div class="comentarios_clientes">
+            <p th:text="${c.Comentario}"></p>
+          </div>
+        </div>
+      </section>
+	<div th:insert="/layouts/footer :: footer"></div>
+</body>
+</html>

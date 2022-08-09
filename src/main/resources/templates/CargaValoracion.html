@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Valoracion</title>
+	<link rel="stylesheet" th:href="@{/css/valoracion.css}">
+	<link rel="stylesheet" th:href="@{/css/estilo.css}">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400&display=swap" rel="stylesheet">
+</head>
+<body>
+	<div th:insert="/layouts/nav :: nav"></div>
+	<section>
+		<div class="container1">
+			<div class="post">
+				<div class="text">¡Gracias por valorar esta pelicula!</div>
+				<div class="edit">Editar</div>
+			</div>
+			<form th:object="${valoracion}" th:action="@{/valorar}" method="post">
+				<input type="hidden" th:field="*{pelis}">
+				<input type="hidden" th:field="*{usuario}">
+				<div class="star-widget">
+					<input th:field="*{valor}" type="radio" name="rate" id="rate-5" value="5">
+					<label for="rate-5" class="fa-solid fa-star"></label>
+					<input th:field="*{valor}" type="radio" name="rate" id="rate-4" value="4">
+					<label for="rate-4" class="fa-solid fa-star"></label>
+					<input th:field="*{valor}" type="radio" name="rate" id="rate-3" value="3">
+					<label for="rate-3" class="fa-solid fa-star"></label>
+					<input th:field="*{valor}" type="radio" name="rate" id="rate-2" value="2">
+					<label for="rate-2" class="fa-solid fa-star"></label>
+					<input th:field="*{valor}" type="radio" name="rate" id="rate-1" value="1">
+					<label for="rate-1" class="fa-solid fa-star"></label>
+					<div class="area">
+						<div class="header"></div>
+						<div class="textarea">
+							<textarea cols="30" placeholder="Escribe un comentario" th:field="*{Comentario}"></textarea>
+						</div>
+						<div class="btn">
+							<button type="submit">Enviar</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</section>
+	<div th:insert="/layouts/footer :: footer"></div>
+	<script src="https://kit.fontawesome.com/1b33cce3bc.js" crossorigin="anonymous"></script>
+</body>
+</html>

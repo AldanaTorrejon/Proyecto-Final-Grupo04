@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+ <meta charset="UTF-8">
+    <title>PROYECTO FINAL-G4</title>
+	<link rel="stylesheet" href="css/estilo.css">
+	<link rel="stylesheet" href="css/swiper-bundle.min.css">
+	<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+	<link href="https://unpkg.com/swiper/swiper-bundle.min.css" rel="stylesheet"/>
+	<link rel="shortcut icon" href="img/ICONO.png" type="image/ico" /> 
+</head>
+
+<body>
+	<!---header--->
+	<header>
+		<!--nav-->
+		<div th:insert="/layouts/nav :: nav"></div>
+	</header>
+	<!--Principal-->
+	<section class="principal-container" id="principal">
+		<div class="principal-texto">
+			<img src="img/peliculaPoster.jpg" alt="" class="principal-img">
+			<a href="https://www.youtube.com/embed/ZtrVTWK486k"  class="watch-btn">
+                <i class='bx bx-caret-right-circle mirarpeli'> <p>Trailer</p></i>
+            </a>
+		</div>
+	</section>
+   <!--Peliculas Recomendadas-->
+   <section class="peliculas-recomendado-container swiper" id="peliculas-recomendado">
+	<div class="heading">
+		<h2 class="heading-titulo">Creemos que te gustarán❤</h2>
+	</div>
+	<div class="peliculas-recomendadas contenedor">
+		<div class="contenedor-principal">
+			<button role="button" id="flecha-izquierda" class="flecha-izquierda"></i><i class="fas fa-angle-left"></i></button>
+			<div class="contenedor-carousel">
+				<div class="carousel" >
+					<div class="pelicula" style="width: 18rem;" th:each="p : ${listaPelicula}"> <!-- aumente el styles -->
+						<a th:href="@{'/descrip/'+ ${p.Idp}}"><img th:src="${'data:image/jpg;base64,'+p.imagen}"></a>
+						<div class="card-body">
+							<h2 class="card-title" th:text="${p.NombrePelicula}"></h2>
+							<p class="card-text"><span th:text="${p.Duracion}"></span> || <span th:text="${p.generoPelicula}"></span></p>
+							<button><a class="btn btn-warning" th:href="@{'/comprar/'+${p.Idp}}">Comprar</a></button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<button role="button" id="flecha-derecha" class="flecha-derecha"><i class="fas fa-angle-right"></i></button>
+		</div>
+	</div>
+  </section>
+	<div th:insert="/layouts/footer :: footer"></div>	
+	<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

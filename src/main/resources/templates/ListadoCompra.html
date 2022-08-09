@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lista Compra</title>
+    <link th:href="@{/webjars/bootstrap/5.0.0/css/bootstrap.min.css}"
+	rel="stylesheet" type="text/css">
+    <link rel="stylesheet" th:href="@{/css/estilo.css}">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div th:insert="/layouts/nav :: nav"></div>
+    <div class="container">
+        <div class="row">
+            <h1>Lista de Compra</h1>
+        </div>
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th>N°</th>
+                    <th>Portada</th>
+                    <th>Nombre de Pelicula</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:if="${listaCompra.empty}">
+					<td colspan="6" style="color: #FC9A9A;">No compro ninguna pelicula</td>
+				</tr>
+                <tr th:each="c : ${listaCompra}">
+                    <td th:text="${c.idUsuarioPeli}"></td>
+                    <td><img th:src="${'data:image/jpg;base64,'+c.pelis.imagen}" style="width: 150px;"></td>
+                    <td th:text="${c.pelis.NombrePelicula}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
