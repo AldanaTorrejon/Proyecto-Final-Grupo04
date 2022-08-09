@@ -20,19 +20,24 @@ public class ConfiguracionWeb extends WebSecurityConfigurerAdapter{
 	String[] resources = new String[] {"/include/**", "/css/**", "/icons/**","/img**","/js**","/layer/**","/webjars/**"};
 	
 	@Override
-	protected void configure(HttpSecurity http) throws Exception{
+	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().authorizeRequests().antMatchers(resources).permitAll()
-		                                       .antMatchers("/","/index").permitAll()
-		                                       .anyRequest().authenticated()
-		                                       .and()
-		                                     .formLogin()
-		                                       .loginPage("/login").permitAll()
-		                                       .successHandler(autenticacion).failureUrl("/login?error=true")
-		                                       .usernameParameter("dni").passwordParameter("contraseña").and()
-		                                      .logout()
-		                                        .permitAll()
-		                                        .logoutSuccessUrl("/login?logout");
-		       
+				.antMatchers("/", "/index","/otroUsuario","/guardarUsuario").permitAll()
+				.anyRequest()
+				.authenticated()
+				.and()
+				.formLogin()
+				.loginPage("/login")
+				.permitAll()
+				.successHandler(autenticacion)
+				.failureUrl("/login?error=true")
+				.usernameParameter("dni")
+				.passwordParameter("contraseña")
+				.and()
+				.logout()
+				.permitAll()
+				.logoutSuccessUrl("/login?logout");
+
 	}
 	
 	BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -46,7 +51,7 @@ public class ConfiguracionWeb extends WebSecurityConfigurerAdapter{
 	LoginService userDetailsService;
 	
 	@Autowired
-	public void configuracionGlobal(AuthenticationManagerBuilder auth) throws Exception{
+	protected void configuracionGlobal(AuthenticationManagerBuilder auth) throws Exception{
 		System.out.println("***Inicio del Usuario***");
 		auth.userDetailsService(userDetailsService);
 	}

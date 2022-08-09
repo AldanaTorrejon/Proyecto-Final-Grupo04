@@ -1,10 +1,66 @@
 <!DOCTYPE html>
-<html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" th:href="@{/css/Formulario.css}">
+  <link th:href="@{/webjars/bootstrap/5.0.0/css/bootstrap.min.css}"rel="stylesheet" type="text/css">
+  <link rel="stylesheet" th:href="@{/css/estilo.css}">
+  <link href="https://fonts.googleapis.com/css?family=Raleway:200,300,400&display=swap" rel="stylesheet">
+  	<link rel="stylesheet" href="css/swiper-bundle.min.css">
+	<link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+	<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet"> 
+	<link href="https://unpkg.com/swiper/swiper-bundle.min.css" rel="stylesheet"/>
+	<link rel="shortcut icon" href="img/ICONO.png" type="image/ico" /> 
+  <title>Registro Pelicula</title>
 </head>
 <body>
-
+  <div th:insert="/layouts/nav-admin :: nav-admin"></div>
+  <div class="container">
+    <div class="modal-dialog text-center">
+      <div class="col-sm-8 main-section">
+        <div class="modal-content">
+          <h1>Registro Pelicula </h1>
+          <span class="linea"></span>
+          <form class="form" th:object="${pelicula}" th:action="${editMode}?@{/editarPelicula}:@{/guardarPelicula}" method="post" enctype="multipart/form-data">
+          <div class="col">
+            <input type="hidden" th:field="*{Idp}">
+            <input type="hidden" th:field="*{Estado}">
+            <div class="form-group">
+              <label class="form-label">Titulo de la pelicula</label>
+              <input class="form-control" th:field="*{NombrePelicula}" type="text" required="required">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Genero de la pelicula</label>
+              <input class="form-control" th:field="*{generoPelicula}" type="text" required="required">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Duración de la pelicula</label>
+              <input class="form-control" type="text" required="required" th:field="*{duracion}">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Numero de la sala</label>
+              <input class="form-control" th:field="*{sala}" type="number" required="required">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Ingrese la descripción</label>
+              <textarea class="form-control" th:field="*{Descripcion}" required="required"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="btn-file" th:text="${editMode}?'Agregue portada nuevamente':'Adjuntar img de la portada'"></label>
+              <div class="col-sm-10">
+                <input class="control-file" type="file" name="file" id="file" accept="image/x-png,image/gif,image/jpeg,image/png,image/jpg" onchange="loadFile(event)">
+                <img id="output" class="form-input">
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit"> <span th:text="${editMode}?'Modificar':'Guardar'"></span></button>
+            <button class="btn btn-primary"><a href="/ListadoPelicula-admin" style="color: white;">Volver</a></button>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
