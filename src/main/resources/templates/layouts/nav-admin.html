@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Footer</title>
+</head>
+<body>
+  <div class="nav container pelicula" th:fragment="nav-admin">
+    <!--logo-->
+    <a href="/ListadoPelicula-admin" class="logo">
+      Euno<span>IA-G4</span>
+    </a> 
+    <!--NavBar/Header Principal-->
+    <div class="navbar">
+      <a href="/ListadoPelicula-admin" class="nav-link-pelicula ">
+        <i class='bx bxs-home-smile' ></i>
+        <span class="nav-link-titulo">Inicio</span>
+      </a>
+      <a href="/otraPelicula" class="nav-link-pelicula ">
+        <i class='bx bxs-heart' ></i>
+        <span class="nav-link-titulo">Cargar pelicula</span>
+      </a>
+      <a href="/ListadoUsuario" class="nav-link-pelicula">
+        <i class='bx bxs-heart' ></i>
+        <span class="nav-link-titulo">Usuario</span>
+      </a>
+      <a href="/login?logout" class="nav-link-pelicula ">
+        <i class='bx bx-exit'></i>
+        <span class="nav-link-titulo">Cerrar Sesion</span>
+      </a>
+    </div> 	 			
+    <!--buscar-->
+    <div class="search-box">
+      <i class="bx bx-search"></i>
+      <input type="search" name="" id="search-input" placeholder="Buscar Peliculas">
+    </div>
+    <!--Usuario/Perfil-->
+    <a href="#" class="user">
+        <img th:src="@{/img/UsuarioFoto.jpg}" alt="" class="user-img">			 
+    </a>
+  </div>
+</body>
+</html>
